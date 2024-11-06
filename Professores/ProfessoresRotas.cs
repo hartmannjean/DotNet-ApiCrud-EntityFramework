@@ -44,7 +44,7 @@ namespace ApiCrud.Professores {
             rotasProfessor.MapGet("contendo/{nameContains}", async (string nameContains, AppDbContext context, CancellationToken ct) =>
             {
                 /*
-                    Aqui é como se eu estivesse fazendo em sql: SELECT Id, Nome, Material, Salario, Ativo FROM Professores WHERE Nome = name
+                    Aqui é como se eu estivesse fazendo em sql: SELECT Id, Nome, Material, Salario, Ativo FROM Professores WHERE Nome like '%name%'
                 */
                 return Results.Ok(await context.Professores
                 .Where(professor => professor.Nome.Contains(nameContains))
