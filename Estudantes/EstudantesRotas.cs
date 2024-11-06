@@ -22,22 +22,28 @@ namespace ApiCrud.Estudantes {
             rotasestudantes.MapPost("",
                 async (AddEstudanteRequest request, AppDbContext context, CancellationToken ct) =>
                 {
+                    //AnyAsync = Verifica se existe algum estudante com o mesmo nome
                     var jaExiste = await context.Estudantes
                     .AnyAsync(estudante => estudante.Nome == request.Nome, ct);
 
+                    //Conflict = 409
                     if (jaExiste)
                         return Results.Conflict("Já existe!");
 
                     var novoEstudante = new Estudante(request.Nome);
+                    //AddAsync = Adiciona um novo estudante
                     await context.Estudantes.AddAsync(novoEstudante, ct);
+                    //SaveChangesAsync = Salva as alterações no banco de dados
                     await context.SaveChangesAsync(ct);
 
+                    //Retorna o estudante criado
+                    //Results.Ok = 200
                     var estudanteRetorno = new EstudanteDto(novoEstudante.Id, novoEstudante.Nome);
                     return Results.Ok(estudanteRetorno);
 
                 });
 
-            //Pegar todos os estudantes
+            //Pegar todos os estudantes ativos
             rotasestudantes.MapGet("",
                 async (AppDbContext context, CancellationToken ct) =>
                 {

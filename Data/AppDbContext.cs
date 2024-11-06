@@ -1,4 +1,5 @@
 ﻿using ApiCrud.Estudantes;
+using ApiCrud.Professores;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiCrud.Data {
@@ -11,6 +12,7 @@ namespace ApiCrud.Data {
     public class AppDbContext : DbContext
     {
         public DbSet<Estudante> Estudantes { get; set; }
+        public DbSet<Professor> Professores { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
