@@ -1,5 +1,6 @@
 using ApiCrud.Data;
 using ApiCrud.Estudantes;
+using ApiCrud.Professores;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ app.UseHttpsRedirection();
 //app.MapGet("Hello-World", () => "Hello World");
 //EstudantesRotas.AddRotasEstudantes(app);
 app.AddRotasEstudantes();
+app.AddRotasProfessores();
 
 
 app.Run();
