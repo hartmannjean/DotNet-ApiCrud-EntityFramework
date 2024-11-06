@@ -8,6 +8,16 @@ namespace ApiCrud.Estudantes {
         {
             var rotasestudantes = app.MapGroup("estudantes");
 
+
+            /*
+               Sobre cancellationToken:
+           
+                1.	Criação: Um CancellationToken é criado a partir de um CancellationTokenSource.
+                2.	Passagem: O token é passado para métodos assíncronos que suportam cancelamento.
+                3.	Cancelamento: Quando o cancelamento é solicitado, o CancellationTokenSource sinaliza o token, e os métodos que estão observando o token podem interromper a operação.
+             
+             */
+
             //Add novo estudante
             rotasestudantes.MapPost("",
                 async (AddEstudanteRequest request, AppDbContext context, CancellationToken ct) =>
