@@ -12,6 +12,9 @@ namespace ApiCrud.Professores {
             //Adicionar novo professor
             rotasProfessor.MapPost("", async (AddProfessorRequest request, AppDbContext context, CancellationToken ct) =>
             {
+                /*
+                    Aqui é como se eu tivesse fazendo em sql: Insert into Professores (Nome, Materia, Salario, Ativo) values (request.Nome, request.Materia, request.Salario, request.Ativo)
+                */
                 var novoProfessor = new Professor(request.Nome, request.Materia, request.Salario);
                 await context.AddAsync(novoProfessor, ct);
                 await context.SaveChangesAsync(ct);
@@ -23,6 +26,9 @@ namespace ApiCrud.Professores {
             //Pega todos os professores ativos
             rotasProfessor.MapGet("", async (AppDbContext context, CancellationToken ct) =>
             {
+                /*
+                    Aqui é como se eu tivesse fazendo em sql: select Id, Nome, Materia, Salario, Ativo from Professores where Ativo = true
+                */
                 return Results.Ok(await context.Professores
                 .Where(professor => professor.Ativo)
                 .Select(professor => new ProfessorDto(professor.Id, professor.Nome, professor.Materia, professor.Salario, professor.Ativo))
