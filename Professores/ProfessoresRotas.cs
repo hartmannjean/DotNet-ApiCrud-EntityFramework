@@ -57,6 +57,23 @@ namespace ApiCrud.Professores {
                 .Select(professor => new ProfessorDto(professor.Id, professor.Nome, professor.Materia, professor.Salario, professor.Ativo))
                 .ToListAsync());
             });
+
+            //Atualizar nome de um professor por id
+            rotasProfessor.MapPut("{id:guid}", async (Guid id, UpdateProfessorRequest request, AppDbContext context, CancellationToken ct) =>
+            {
+                /*
+                    Aqui é como se eu estivesse fazendo em sql: UPDATE Professores SET Nome = request.Nome WHERE Id = id
+                */
+                var professor = await context.Professores.FindAsync(id);
+                if (professor == null)
+                    return Results.NotFound();
+
+                professor.Nome = request.Nome;
+                await context.SaveChangesAsync(ct);
+
+                return Results.Ok();
+            });
+
         }
     }
 }
